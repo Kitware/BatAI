@@ -37,12 +37,14 @@ setup(
     include_package_data=True,
     install_requires=[
         'celery',
+        'guano',
+        'gunicorn',
         'django-ninja',
         'django>=4.1, <4.2',
         'django-allauth',
         'django-configurations[database,email]',
         'django-extensions',
-        'django-filter',
+        'django-large-image',
         'django-oauth-toolkit',
         'djangorestframework',
         'drf-yasg',
@@ -51,9 +53,23 @@ setup(
         'django-composed-configuration[prod]>=0.20',
         'django-s3-file-field[boto3]<1',
         'gunicorn',
+        'flower',
+        # Spectrogram Generation
         'librosa',
         'matplotlib',
+        'mercantile',
         'numpy',
+        # 'onnxruntime-gpu',
+        'onnx',
+        'onnxruntime',
+        'opencv-python-headless',
+        'tqdm',
+        # large image
+        'django-large-image>=0.10.0',
+        'large-image[rasterio,pil]>=1.22',
+        'rio-cogeo',
+        # guano metadata
+        'guano',
     ],
     extras_require={
         'dev': [

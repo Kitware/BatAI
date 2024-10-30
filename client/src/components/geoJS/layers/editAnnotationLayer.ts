@@ -1,7 +1,7 @@
 /*eslint class-methods-use-this: "off"*/
 import geo, { GeoEvent } from "geojs";
-import { SpectroInfo, spectroToGeoJSon, reOrdergeoJSON } from "../geoJSUtils";
-import { SpectrogramAnnotation } from "../../../api/api";
+import { SpectroInfo, spectroToGeoJSon, reOrdergeoJSON, spectroTemporalToGeoJSon } from "../geoJSUtils";
+import { SpectrogramAnnotation, SpectrogramTemporalAnnotation } from "../../../api/api";
 import { LayerStyle } from "./types";
 import { GeoJSON } from "geojson";
 
@@ -14,13 +14,6 @@ interface RectGeoJSData {
   polygon: GeoJSON.Polygon;
 }
 
-interface EditHandleStyle {
-  type: string;
-  x: number;
-  y: number;
-  index: number;
-  editHandle: boolean;
-}
 
 const typeMapper = new Map([
   ["LineString", "line"],
@@ -77,8 +70,13 @@ export default class EditAnnotationLayer {
 
   leftButtonCheckTimeout: number; //Fallthough mouse down when ending lineStrings
 
+  scaledWidth: number;
+  scaledHeight: number;
+
   /* in-progress events only emitted for lines and polygons */
   shapeInProgress: GeoJSON.LineString | GeoJSON.Polygon | null;
+
+  mode: 'pulse' | 'sequence';
 
   constructor(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -94,6 +92,7 @@ export default class EditAnnotationLayer {
       strokeWidth: 1.0,
       antialiasing: 0,
     };
+    this.mode = 'pulse';
     this.formattedData = [];
     this.spectroInfo = spectroInfo;
     this.skipNextExternalUpdate = false;
@@ -104,9 +103,17 @@ export default class EditAnnotationLayer {
     this.shapeInProgress = null;
     this.disableModeSync = false;
     this.leftButtonCheckTimeout = -1;
+    this.scaledWidth = 0;
+    this.scaledHeight = 0;
 
     //Only initialize once, prevents recreating Layer each edit
     this.initialize();
+  }
+
+  destroy() {
+    if (this.featureLayer) {
+      this.geoViewerRef.deleteLayer(this.featureLayer);
+    }
   }
 
   /**
@@ -163,6 +170,11 @@ export default class EditAnnotationLayer {
     return () => {
       this.skipNextExternalUpdate = true;
     };
+  }
+
+  setScaledDimensions(newWidth: number, newHeight: number) {
+    this.scaledWidth = newWidth;
+    this.scaledHeight = newHeight;
   }
 
   /**
@@ -272,8 +284,10 @@ export default class EditAnnotationLayer {
         this._mode = "editing";
         newLayerMode = "edit";
         this.event("update:cursor", { cursor: "default" });
+        this.event("update:mode", { mode: "editing" });
       } else if (typeMapper.has(mode)) {
         this._mode = "creation";
+        this.event("update:mode", { mode: "creation" });
         newLayerMode = typeMapper.get(mode) as string;
         this.event("update:cursor", { cursor: "crosshair" });
       } else {
@@ -281,6 +295,7 @@ export default class EditAnnotationLayer {
       }
       this.featureLayer.mode(newLayerMode, geom);
     } else {
+      this.event("update:mode", { mode: "disabled" });
       this.featureLayer.mode(null);
     }
   }
@@ -298,8 +313,8 @@ export default class EditAnnotationLayer {
   disable() {
     if (this.featureLayer) {
       this.skipNextExternalUpdate = false;
+      this.featureLayer.removeAllAnnotations(false, true);
       this.setMode(null);
-      this.featureLayer.removeAllAnnotations(false);
       this.shapeInProgress = null;
       if (this.selectedHandleIndex !== -1) {
         this.selectedHandleIndex = -1;
@@ -310,21 +325,23 @@ export default class EditAnnotationLayer {
         });
       }
       this.event("update:cursor", { cursor: "default" });
+      this.event("update:mode", { mode: "disabled" });
     }
   }
 
   /** overrides default function to disable and clear anotations before drawing again */
-  async changeData(frameData: SpectrogramAnnotation | null) {
+  async changeData(frameData: SpectrogramAnnotation | null | SpectrogramTemporalAnnotation, type: 'pulse' | 'sequence') {
+    this.mode = type;
     if (this.skipNextExternalUpdate === false) {
       // disable resets things before we load a new/different shape or mode
       this.disable();
       //TODO: Find a better way to track mouse up after placing a point or completing geometry
       //For line drawings and the actions of any recipes we want
       if (this.geoViewerRef.interactor().mouse().buttons.left) {
-        this.leftButtonCheckTimeout = window.setTimeout(() => this.changeData(frameData), 20);
+        this.leftButtonCheckTimeout = window.setTimeout(() => this.changeData(frameData, type), 20);
       } else {
         clearTimeout(this.leftButtonCheckTimeout);
-        this.formatData(frameData);
+        this.formatData(frameData, type);
       }
     } else {
       // prevent was called and it has prevented this update.
@@ -339,7 +356,7 @@ export default class EditAnnotationLayer {
    *
    * @param frameData a single FrameDataTrack Array that is the editing item
    */
-  formatData(annotationData: SpectrogramAnnotation | null) {
+  formatData(annotationData: SpectrogramAnnotation | null | SpectrogramTemporalAnnotation, type: 'pulse' | 'sequence') {
     this.selectedHandleIndex = -1;
     this.hoverHandleIndex = -1;
     this.event("update:selectedIndex", {
@@ -347,7 +364,10 @@ export default class EditAnnotationLayer {
       selectedKey: this.selectedKey,
     });
     if (annotationData) {
-      const geoJSONData = spectroToGeoJSon(annotationData, this.spectroInfo);
+
+      const compressedView =  !!(this.spectroInfo.start_times && this.spectroInfo.end_times && type ==='sequence');
+      const offsetY = compressedView ? -20 : 0;  
+      const geoJSONData = type === 'pulse' ? spectroToGeoJSon(annotationData as SpectrogramAnnotation, this.spectroInfo, 1, this.scaledWidth, this.scaledHeight): spectroTemporalToGeoJSon(annotationData as SpectrogramTemporalAnnotation, this.spectroInfo, -10, -50, 1, this.scaledWidth, this.scaledHeight, offsetY);
       const geojsonFeature: GeoJSON.Feature = {
         type: "Feature",
         geometry: geoJSONData,
@@ -479,10 +499,11 @@ export default class EditAnnotationLayer {
    * The base style used to represent the annotation
    */
   createStyle(): LayerStyle<GeoJSON.Feature> {
+
     return {
       ...{
-        strokeColor: "black",
-        strokeWidth: 4.0,
+        strokeColor: 'black',
+        strokeWidth: 1.0,
         antialiasing: 0,
         stroke: true,
         uniformPolygon: true,
@@ -497,39 +518,43 @@ export default class EditAnnotationLayer {
    * Styling for the handles used to drag the annotation for ediing
    */
   editHandleStyle() {
-    if (this.type === "rectangle") {
+    if (this.type === "rectangle" && this.mode === 'pulse') {
       return {
         handles: {
           rotate: false,
+          resize: false,
         },
-      };
-    }
-    if (this.type === "Point") {
+      }; 
+    } else if (this.type === 'rectangle' && this.mode === 'sequence') {
       return {
-        handles: false,
-      };
-    }
-    if (this.type === "Polygon" || this.type === "LineString") {
-      return {
-        handles: {
-          rotate: false,
-          edge: this.type !== "LineString",
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        strokeOpacity: (d: any) => {
+          if (d.type === 'edge' && [1,3].includes(d.index)) {
+            return 0.0;
+          }
+          return 1.0;
         },
-        fill: true,
-        radius: (handle: EditHandleStyle): number => {
-          if (handle.type === "edge") {
-            return 5;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        stroke: (d: any) => {
+          if (d.type === 'edge' && [1,3].includes(d.index)) {
+            return false;
+          }
+          return true;
+        },
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        radius: function (d: any) {
+          if (d.type === 'edge' && [1,3].includes(d.index)) {
+            return 0;
           }
           return 8;
-        },
-        fillOpacity: (_: EditHandleStyle, index: number) => {
-          if (index === this.selectedHandleIndex) {
-            return 1;
-          }
-          return 0.25;
-        },
-        strokeColor: "red",
-        fillColor: "red",
+        },      
+        handles: {
+          rotate:false,
+          vertex: false,
+          edge: true,
+          center:false,
+          resize:false
+        }
       };
     }
     return {

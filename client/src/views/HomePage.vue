@@ -1,9 +1,11 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
-
 export default defineComponent({
+  components: {
+  },
   setup() {
-    return { };
+
+    return {  };
   },
 });
 </script>
@@ -13,8 +15,10 @@ export default defineComponent({
     <v-card-title>
       Bat-AI
     </v-card-title>
-    <v-card-text>
-      For right now please select "Files" to open a specific file in the spectrogram viewer or go to "Species" to view a list of species in the system.
+    <v-card-text class="ma-5">
+      <p>
+        Please utilize the Help Icon <v-icon>mdi-help</v-icon> to get information about Shortcuts, Uploading, and creating Annotations.
+      </p>
     </v-card-text>
   </v-card>
 </template>

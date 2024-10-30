@@ -12,5 +12,6 @@ class Annotations(models.Model):
     end_time = models.IntegerField(blank=True, null=True)
     low_freq = models.IntegerField(blank=True, null=True)
     high_freq = models.IntegerField(blank=True, null=True)
+    type = models.TextField(blank=True, null=True)
     species = models.ManyToManyField(Species)
     comments = models.TextField(blank=True, null=True)

@@ -1,0 +1,2 @@
+assets/example.wav filter=lfs diff=lfs merge=lfs -text
+assets/model.mobilenet.onnx filter=lfs diff=lfs merge=lfs -text

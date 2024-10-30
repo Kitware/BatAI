@@ -3,14 +3,11 @@ from django.contrib import admin
 from django.urls import include, path
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from rest_framework import permissions, routers
+from rest_framework import permissions
 
-from bats_ai.core.rest import ImageViewSet
+from bats_ai.core.rest import rest
 
 from .api import api
-
-router = routers.SimpleRouter()
-
 
 # Some more specific Api Requests
 # OpenAPI generation
@@ -19,17 +16,17 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=(permissions.AllowAny,),
 )
-router.register(r'images', ImageViewSet)
 
 urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('oauth/', include('oauth2_provider.urls')),
     path('admin/', admin.site.urls),
     path('api/v1/s3-upload/', include('s3_file_field.urls')),
-    path('api/v1/', include(router.urls)),
+    path('api/v1/dynamic/', include(rest.urls)),
+    path('api/v1/', api.urls),
     path('api/docs/redoc/', schema_view.with_ui('redoc'), name='docs-redoc'),
     path('api/docs/swagger/', schema_view.with_ui('swagger'), name='docs-swagger'),
-    path('api/v1/', api.urls),
+    path('', include('django_large_image.urls')),
 ]
 
 if settings.DEBUG:

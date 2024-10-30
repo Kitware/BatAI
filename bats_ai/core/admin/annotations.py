@@ -13,6 +13,7 @@ class AnnotationsAdmin(admin.ModelAdmin):
         'end_time',
         'low_freq',
         'high_freq',
+        'type',
         'comments',
     ]
     list_select_related = True

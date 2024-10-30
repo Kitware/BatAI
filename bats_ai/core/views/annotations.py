@@ -2,9 +2,9 @@ import logging
 
 from django.http import HttpRequest
 from ninja import Schema
-from ninja.errors import HttpError
 from ninja.pagination import RouterPaginated
-from oauth2_provider.models import AccessToken
+
+from bats_ai.core.models import Annotations, Recording
 
 logger = logging.getLogger(__name__)
 
@@ -23,10 +23,28 @@ class AnnotationSchema(Schema):
     comments: str
 
 
-def get_owner_id(request: HttpRequest):
-    token = request.headers.get('Authorization').replace('Bearer ', '')
-    token_found = AccessToken.objects.get(token=token)
-    if not token_found:
-        raise HttpError(401, 'Authentication credentials were not provided.')
+@router.get('/{id}')
+def get_annotation(request: HttpRequest, id: int):
+    try:
+        annotation = Annotations.objects.get(pk=id)
+        recording = annotation.recording
 
-    return token_found.user.pk
+        # Check if the user owns the recording or if the recording is public
+        if recording.owner == request.user or recording.public:
+            # Query annotations associated with the recording that are owned by the current user
+            annotations_qs = Annotations.objects.filter(recording=recording, owner=request.user)
+
+            # Serialize the annotations using AnnotationSchema
+            annotations_data = [
+                AnnotationSchema.from_orm(annotation, owner_email=request.user.email).dict()
+                for annotation in annotations_qs
+            ]
+
+            return annotations_data
+        else:
+            return {
+                'error': 'Permission denied. You do not own this annotation, or the associated recording is not public.'
+            }
+
+    except Recording.DoesNotExist:
+        return {'error': 'Recording not found'}

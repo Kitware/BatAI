@@ -9,12 +9,13 @@ interface RectGeoJSData {
   selected: boolean;
   editing?: boolean;
   polygon: GeoJSON.Polygon;
+  color?: string;
+  owned: boolean; // if the annotation is user owned
 }
 
 export default class RectangleLayer {
   formattedData: RectGeoJSData[];
 
-  drawingOther: boolean; //drawing another type of annotation at the same time?
 
   hoverOn: boolean; //to turn over annnotations on
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,6 +33,9 @@ export default class RectangleLayer {
 
   style: LayerStyle<RectGeoJSData>;
 
+  scaledWidth: number;
+  scaledHeight: number;
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   constructor(
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -41,11 +45,12 @@ export default class RectangleLayer {
     spectroInfo: SpectroInfo
   ) {
     this.geoViewerRef = geoViewerRef;
-    this.drawingOther = false;
     this.spectroInfo = spectroInfo;
     this.formattedData = [];
     this.hoverOn = false;
     this.selectedIndex = [];
+    this.scaledWidth = 0;
+    this.scaledHeight = 0;
     this.event = event;
     //Only initialize once, prevents recreating Layer each edit
     const layer = this.geoViewerRef.createLayer("feature", {
@@ -60,11 +65,15 @@ export default class RectangleLayer {
          * */
         if (e.mouse.buttonsDown.left) {
           if (!e.data.editing || (e.data.editing && !e.data.selected)) {
-            this.event("annotation-clicked", { id: e.data.id, edit: false });
+            if (e.data.owned) {
+              this.event("annotation-clicked", { id: e.data.id, edit: false });
+            }
           }
         } else if (e.mouse.buttonsDown.right) {
           if (!e.data.editing || (e.data.editing && !e.data.selected)) {
-            this.event("annotation-right-clicked", { id: e.data.id, edit: true });
+            if (e.data.owned) {
+              this.event("annotation-right-clicked", { id: e.data.id, edit: true });
+            }
           }
         }
       });
@@ -102,26 +111,47 @@ export default class RectangleLayer {
     }
   }
 
-  /**
-   * Used to set the drawingOther parameter used to change styling if other types are drawn
-   * and also handle selection clicking between different types
-   * @param val - determines if we are drawing other types of annotations
-   */
-  setDrawingOther(val: boolean) {
-    this.drawingOther = val;
+  setScaledDimensions(newWidth: number, newHeight: number) {
+    this.scaledWidth = newWidth;
+    this.scaledHeight = newHeight;    
   }
 
-  formatData(annotationData: SpectrogramAnnotation[], selectedIndex: number | null) {
+  destroy() {
+    if (this.featureLayer) {
+      this.geoViewerRef.deleteLayer(this.featureLayer);
+    }
+  }
+
+  formatData(
+    annotationData: SpectrogramAnnotation[],
+    selectedIndex: number | null,
+    currentUser: string,
+    colorScale?: d3.ScaleOrdinal<string, string, never>,
+    yScale = 1,
+  ) {
     const arr: RectGeoJSData[] = [];
     annotationData.forEach((annotation: SpectrogramAnnotation) => {
-        const polygon = spectroToGeoJSon(annotation, this.spectroInfo);
-        const newAnnotation: RectGeoJSData = {
-          id: annotation.id,
-          selected: annotation.id === selectedIndex,
-          editing: annotation.editing,
-          polygon,
-        };
-        arr.push(newAnnotation);
+      const polygon = spectroToGeoJSon(annotation, this.spectroInfo, yScale, this.scaledWidth, this.scaledHeight);
+      const [xmin, ymin] = polygon.coordinates[0][0];
+      const [xmax, ymax] = polygon.coordinates[0][2];
+      // For the compressed view we need to filter out default or NaN numbers
+      if (Number.isNaN(xmax) || Number.isNaN(xmin) || Number.isNaN(ymax) || Number.isNaN(ymin)) {
+        return;
+      }
+      if (xmax === -1 && ymin === -1 && ymax === -1 && xmin === -1) {
+        return;
+      }
+      const newAnnotation: RectGeoJSData = {
+        id: annotation.id,
+        selected: annotation.id === selectedIndex,
+        editing: annotation.editing,
+        polygon,
+        owned: annotation.owner_email === currentUser,
+      };
+      if (colorScale && annotation.owner_email !== currentUser && annotation.owner_email) {
+        newAnnotation.color = colorScale(annotation.owner_email);
+      }
+      arr.push(newAnnotation);
     });
     this.formattedData = arr;
   }
@@ -143,7 +173,7 @@ export default class RectangleLayer {
     return {
       ...{
         strokeColor: "black",
-        strokeWidth: 4.0,
+        strokeWidth: 2.0,
         antialiasing: 0,
         stroke: true,
         uniformPolygon: true,
@@ -156,6 +186,9 @@ export default class RectangleLayer {
       strokeColor: (_point, _index, data) => {
         if (data.selected) {
           return "cyan";
+        }
+        if (data.color) {
+          return data.color;
         }
         return "red";
       },

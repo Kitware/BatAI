@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from composed_configuration import (
@@ -10,11 +11,8 @@ from composed_configuration import (
     ProductionBaseConfiguration,
     TestingBaseConfiguration,
 )
+from composed_configuration._configuration import _BaseConfiguration
 from configurations import values
-
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-]
 
 
 class BatsAiMixin(ConfigMixin):
@@ -22,6 +20,10 @@ class BatsAiMixin(ConfigMixin):
     ROOT_URLCONF = 'bats_ai.urls'
 
     BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
+
+    FILE_UPLOAD_HANDLERS = [
+        'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+    ]
 
     @staticmethod
     def mutate_configuration(configuration: ComposedConfiguration) -> None:
@@ -33,6 +35,7 @@ class BatsAiMixin(ConfigMixin):
         # Install additional apps
         configuration.INSTALLED_APPS += [
             'django.contrib.gis',
+            'django_large_image',
         ]
 
         configuration.MIDDLEWARE = [
@@ -78,6 +81,32 @@ class DevelopmentConfiguration(BatsAiMixin, DevelopmentBaseConfiguration):
 
 class TestingConfiguration(BatsAiMixin, TestingBaseConfiguration):
     pass
+
+
+class KitwareConfiguration(BatsAiMixin, _BaseConfiguration):
+    SECRET_KEY = values.SecretValue()
+    baseHost = 'batdetectai.kitware.com'
+    if 'SERVERHOSTNAME' in os.environ:
+        baseHost = os.environ['SERVERHOSTNAME']
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    DEFAULT_FILE_STORAGE = 'minio_storage.storage.MinioMediaStorage'
+    MINIO_STORAGE_ENDPOINT = values.Value(
+        'minio:9000',
+    )
+    MINIO_STORAGE_USE_HTTPS = values.BooleanValue(False)
+    MINIO_STORAGE_ACCESS_KEY = values.SecretValue()
+    MINIO_STORAGE_SECRET_KEY = values.SecretValue()
+    MINIO_STORAGE_MEDIA_BUCKET_NAME = values.Value(
+        environ_name='STORAGE_BUCKET_NAME',
+        environ_required=True,
+    )
+    MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
+    MINIO_STORAGE_AUTO_CREATE_MEDIA_POLICY = 'READ_WRITE'
+    MINIO_STORAGE_MEDIA_USE_PRESIGNED = True
+    MINIO_STORAGE_MEDIA_URL = 'http://127.0.0.1:9000/django-storage'
+    ALLOWED_HOSTS = [baseHost]
+    CSRF_TRUSTED_ORIGINS = [f'https://{baseHost}', f'https://{baseHost}']
+    CORS_ORIGIN_WHITELIST = [f'https://{baseHost}', f'https://{baseHost}']
 
 
 class ProductionConfiguration(BatsAiMixin, ProductionBaseConfiguration):

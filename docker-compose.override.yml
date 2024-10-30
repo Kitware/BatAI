@@ -5,11 +5,16 @@ services:
       context: .
       dockerfile: ./dev/django.Dockerfile
     command: ["./manage.py", "runserver", "0.0.0.0:8000"]
+    # ./manage.py runserver 0.0.0.0:8000 --noreload
+    # entrypoint: ["/bin/bash"]
+    # command: ""
     # Log printing via Rich is enhanced by a TTY
     tty: true
     env_file: ./dev/.env.docker-compose
     volumes:
       - .:/opt/django-project
+      - ./dev/grtsCells:/app/csv  # Map the host CSV directory to a directory in the container
+
     ports:
       - 8000:8000
     depends_on:

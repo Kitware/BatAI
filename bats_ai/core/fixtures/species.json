@@ -1,1010 +1,1010 @@
 [
   {
-    "model": "core.Species",
-    "pk": "67",
     "fields": {
-      "species_code": "25k",
-      "family": "",
-      "genus": "",
-      "species": "",
       "common_name": "Various species with pulses that have a minimum frequency of approximately 25 kHz.",
-      "species_code_6": ""
-    }
-  },
-  {
-    "model": "core.Species",
-    "pk": "68",
-    "fields": {
-      "species_code": "40k",
       "family": "",
       "genus": "",
       "species": "",
-      "common_name": "Various species with pulses that have a minimum frequency in the range of 35-45 kHz.",
+      "species_code": "25k",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "67"
   },
   {
-    "model": "core.Species",
-    "pk": "65",
     "fields": {
-      "species_code": "NOISE",
+      "common_name": "Various species with pulses that have a minimum frequency in the range of 35-45 kHz.",
+      "family": "",
+      "genus": "",
+      "species": "",
+      "species_code": "40k",
+      "species_code_6": ""
+    },
+    "model": "core.Species",
+    "pk": "68"
+  },
+  {
+    "fields": {
+      "common_name": "Not a bat/Noise",
       "family": "",
       "genus": "",
       "species": "Not a bat",
-      "common_name": "Not a bat/Noise",
+      "species_code": "NOISE",
       "species_code_6": "NOTBAT"
-    }
+    },
+    "model": "core.Species",
+    "pk": "65"
   },
   {
-    "model": "core.Species",
-    "pk": "1",
     "fields": {
-      "species_code": "ANPA",
+      "common_name": "Pallid bat",
       "family": "Vespertilionidae",
       "genus": "Antrozous",
       "species": "Antrozous pallidus",
-      "common_name": "Pallid bat",
+      "species_code": "ANPA",
       "species_code_6": "ANTPAL"
-    }
+    },
+    "model": "core.Species",
+    "pk": "1"
   },
   {
-    "model": "core.Species",
-    "pk": "55",
     "fields": {
-      "species_code": "ANPAEPFU",
+      "common_name": "Pallid bat/Big brown bat",
       "family": "",
       "genus": "",
       "species": "Antrozous pallidus/Eptesicus fuscus",
-      "common_name": "Pallid bat/Big brown bat",
+      "species_code": "ANPAEPFU",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "55"
   },
   {
-    "model": "core.Species",
-    "pk": "45",
     "fields": {
-      "species_code": "ARJA",
+      "common_name": "Jamaican fruit-eating bat",
       "family": "Phyllostomidae",
       "genus": "Artibeus",
       "species": "Artibeus jamaicensis",
-      "common_name": "Jamaican fruit-eating bat",
+      "species_code": "ARJA",
       "species_code_6": "ARTJAM"
-    }
+    },
+    "model": "core.Species",
+    "pk": "45"
   },
   {
-    "model": "core.Species",
-    "pk": "46",
     "fields": {
-      "species_code": "BRCA",
+      "common_name": "Antillean fruit-eating bat",
       "family": "Phyllostomidae",
       "genus": "Brachyphylla",
       "species": "Brachyphylla cavernarum",
-      "common_name": "Antillean fruit-eating bat",
+      "species_code": "BRCA",
       "species_code_6": "BRACAV"
-    }
+    },
+    "model": "core.Species",
+    "pk": "46"
   },
   {
-    "model": "core.Species",
-    "pk": "2",
     "fields": {
-      "species_code": "CHME",
+      "common_name": "Mexican long-tongued bat",
       "family": "Phyllostomidae",
       "genus": "Choeronycteris",
       "species": "Choeronycteris mexicana",
-      "common_name": "Mexican long-tongued bat",
+      "species_code": "CHME",
       "species_code_6": "CHOMEX"
-    }
+    },
+    "model": "core.Species",
+    "pk": "2"
   },
   {
-    "model": "core.Species",
-    "pk": "3",
     "fields": {
-      "species_code": "CORA",
+      "common_name": "Rafinesque's big-eared bat",
       "family": "Vespertilionidae",
       "genus": "Corynorhinus",
       "species": "Corynorhinus rafinesquii",
-      "common_name": "Rafinesque's big-eared bat",
+      "species_code": "CORA",
       "species_code_6": "CORRAF"
-    }
+    },
+    "model": "core.Species",
+    "pk": "3"
   },
   {
-    "model": "core.Species",
-    "pk": "47",
     "fields": {
-      "species_code": "DIEC",
+      "common_name": "Hairy-legged vampire bat",
       "family": "Phyllostomidae",
       "genus": "Diphylla",
       "species": "Diphylla ecaudata",
-      "common_name": "Hairy-legged vampire bat",
+      "species_code": "DIEC",
       "species_code_6": "DIPECA"
-    }
+    },
+    "model": "core.Species",
+    "pk": "47"
   },
   {
-    "model": "core.Species",
-    "pk": "5",
     "fields": {
-      "species_code": "EPFU",
+      "common_name": "Big brown bat",
       "family": "Vespertilionidae",
       "genus": "Eptesicus",
       "species": "Eptesicus fuscus",
-      "common_name": "Big brown bat",
+      "species_code": "EPFU",
       "species_code_6": "EPTFUS"
-    }
+    },
+    "model": "core.Species",
+    "pk": "5"
   },
   {
-    "model": "core.Species",
-    "pk": "82",
     "fields": {
-      "species_code": "EPFULABO",
+      "common_name": "Big brown bat/Eastern red bat",
       "family": "",
       "genus": "",
       "species": "Eptesicus fuscus/Lasiurus borealis",
-      "common_name": "Big brown bat/Eastern red bat",
+      "species_code": "EPFULABO",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "82"
   },
   {
-    "model": "core.Species",
-    "pk": "56",
     "fields": {
-      "species_code": "EPFULANO",
+      "common_name": "Big brown bat/Silver-haired bat",
       "family": "",
       "genus": "",
       "species": "Eptesicus fuscus/Lasionycteris noctivagans",
-      "common_name": "Big brown bat/Silver-haired bat",
+      "species_code": "EPFULANO",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "56"
   },
   {
-    "model": "core.Species",
-    "pk": "85",
     "fields": {
-      "species_code": "EPFUMYLU",
+      "common_name": "Big brown bat/Little brown bat",
       "family": "",
       "genus": "Eptesicus/Myotis",
       "species": "Eptesicus fuscus/Myotis lucifugus",
-      "common_name": "Big brown bat/Little brown bat",
+      "species_code": "EPFUMYLU",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "85"
   },
   {
-    "model": "core.Species",
-    "pk": "7",
     "fields": {
-      "species_code": "EUFL",
+      "common_name": "Florida bonneted bat",
       "family": "Molossidae",
       "genus": "Eumops",
       "species": "Eumops floridanus",
-      "common_name": "Florida bonneted bat",
+      "species_code": "EUFL",
       "species_code_6": "EUMFLO"
-    }
+    },
+    "model": "core.Species",
+    "pk": "7"
   },
   {
-    "model": "core.Species",
-    "pk": "6",
     "fields": {
-      "species_code": "EUMA",
+      "common_name": "Spotted bat",
       "family": "Vespertilionidae",
       "genus": "Euderma",
       "species": "Euderma maculatum",
-      "common_name": "Spotted bat",
+      "species_code": "EUMA",
       "species_code_6": "EUDMAC"
-    }
+    },
+    "model": "core.Species",
+    "pk": "6"
   },
   {
-    "model": "core.Species",
-    "pk": "8",
     "fields": {
-      "species_code": "EUPE",
+      "common_name": "Greater mastiff bat",
       "family": "Molossidae",
       "genus": "Eumops",
       "species": "Eumops perotis",
-      "common_name": "Greater mastiff bat",
+      "species_code": "EUPE",
       "species_code_6": "EUMPER"
-    }
+    },
+    "model": "core.Species",
+    "pk": "8"
   },
   {
-    "model": "core.Species",
-    "pk": "9",
     "fields": {
-      "species_code": "EUUN",
+      "common_name": "Underwood's mastiff bat",
       "family": "Molossidae",
       "genus": "Eumops",
       "species": "Eumops underwoodi",
-      "common_name": "Underwood's mastiff bat",
+      "species_code": "EUUN",
       "species_code_6": "EUMUND"
-    }
+    },
+    "model": "core.Species",
+    "pk": "9"
   },
   {
-    "model": "core.Species",
-    "pk": "71",
     "fields": {
-      "species_code": "HighF",
+      "common_name": "Various species with pulses having a minimum frequency higher than 30 kHz.",
       "family": "",
       "genus": "",
       "species": "",
-      "common_name": "Various species with pulses having a minimum frequency higher than 30 kHz.",
+      "species_code": "HighF",
       "species_code_6": "HiF"
-    }
+    },
+    "model": "core.Species",
+    "pk": "71"
   },
   {
-    "model": "core.Species",
-    "pk": "10",
     "fields": {
-      "species_code": "IDPH",
+      "common_name": "Allen's big-eared bat",
       "family": "Vespertilionidae",
       "genus": "Idionycteris",
       "species": "Idionycteris phyllotis",
-      "common_name": "Allen's big-eared bat",
+      "species_code": "IDPH",
       "species_code_6": "IDIPHY"
-    }
+    },
+    "model": "core.Species",
+    "pk": "10"
   },
   {
-    "model": "core.Species",
-    "pk": "12",
     "fields": {
-      "species_code": "LABL",
+      "common_name": "Western red bat",
       "family": "Vespertilionidae",
       "genus": "Lasiurus",
       "species": "Lasiurus blossevillii",
-      "common_name": "Western red bat",
+      "species_code": "LABL",
       "species_code_6": "LASBLO"
-    }
+    },
+    "model": "core.Species",
+    "pk": "12"
   },
   {
-    "model": "core.Species",
-    "pk": "57",
     "fields": {
-      "species_code": "LABLPAHE",
+      "common_name": "Western red bat/Canyon bat",
       "family": "",
       "genus": "",
       "species": "Lasiurus blossevillii/Parastrellus hesperus",
-      "common_name": "Western red bat/Canyon bat",
+      "species_code": "LABLPAHE",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "57"
   },
   {
-    "model": "core.Species",
-    "pk": "13",
     "fields": {
-      "species_code": "LABO",
+      "common_name": "Eastern red bat",
       "family": "Vespertilionidae",
       "genus": "Lasiurus",
       "species": "Lasiurus borealis",
-      "common_name": "Eastern red bat",
+      "species_code": "LABO",
       "species_code_6": "LASBOR"
-    }
+    },
+    "model": "core.Species",
+    "pk": "13"
   },
   {
-    "model": "core.Species",
-    "pk": "60",
     "fields": {
-      "species_code": "LABOLASE",
+      "common_name": "Eastern red bat/Seminole bat",
       "family": "",
       "genus": "",
       "species": "Lasiurus borealis/Lasiurus seminolus",
-      "common_name": "Eastern red bat/Seminole bat",
+      "species_code": "LABOLASE",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "60"
   },
   {
-    "model": "core.Species",
-    "pk": "59",
     "fields": {
-      "species_code": "LABOMYLU",
+      "common_name": "Eastern red bat/Little brown bat",
       "family": "",
       "genus": "",
       "species": "Lasiurus borealis/Myotis lucifugus",
-      "common_name": "Eastern red bat/Little brown bat",
+      "species_code": "LABOMYLU",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "59"
   },
   {
-    "model": "core.Species",
-    "pk": "83",
     "fields": {
-      "species_code": "LABONYHU",
+      "common_name": "Eastern red bat/Evening bat",
       "family": "",
       "genus": "",
       "species": "Lasiurus borealis/Nycticeius humeralis",
-      "common_name": "Eastern red bat/Evening bat",
+      "species_code": "LABONYHU",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "83"
   },
   {
-    "model": "core.Species",
-    "pk": "58",
     "fields": {
-      "species_code": "LABOPESU",
+      "common_name": "Eastern red bat/Tricolored bat",
       "family": "",
       "genus": "",
       "species": "Lasiurus borealis/Perimyotis subflavus",
-      "common_name": "Eastern red bat/Tricolored bat",
+      "species_code": "LABOPESU",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "58"
   },
   {
-    "model": "core.Species",
-    "pk": "14",
     "fields": {
-      "species_code": "LACI",
+      "common_name": "Hoary bat",
       "family": "Vespertilionidae",
       "genus": "Lasiurus",
       "species": "Lasiurus cinereus",
-      "common_name": "Hoary bat",
+      "species_code": "LACI",
       "species_code_6": "LASCIN"
-    }
+    },
+    "model": "core.Species",
+    "pk": "14"
   },
   {
-    "model": "core.Species",
-    "pk": "72",
     "fields": {
-      "species_code": "LACILANO",
+      "common_name": "Hoary bat/Silver-haired bat",
       "family": "",
       "genus": "",
       "species": "Lasiurus cinereus/Lasionycteris noctivagans",
-      "common_name": "Hoary bat/Silver-haired bat",
+      "species_code": "LACILANO",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "72"
   },
   {
-    "model": "core.Species",
-    "pk": "62",
     "fields": {
-      "species_code": "LACITABR",
+      "common_name": "Hoary bat/Mexican free-tailed bat",
       "family": "",
       "genus": "",
       "species": "Lasiurus cinereus/Tadarida brasiliensis",
-      "common_name": "Hoary bat/Mexican free-tailed bat",
+      "species_code": "LACITABR",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "62"
   },
   {
-    "model": "core.Species",
-    "pk": "15",
     "fields": {
-      "species_code": "LAEG",
+      "common_name": "Southern yellow bat",
       "family": "Vespertilionidae",
       "genus": "Lasiurus",
       "species": "Lasiurus ega",
-      "common_name": "Southern yellow bat",
+      "species_code": "LAEG",
       "species_code_6": "LASEGA"
-    }
+    },
+    "model": "core.Species",
+    "pk": "15"
   },
   {
-    "model": "core.Species",
-    "pk": "16",
     "fields": {
-      "species_code": "LAIN",
+      "common_name": "Northern yellow bat",
       "family": "Vespertilionidae",
       "genus": "Lasiurus",
       "species": "Lasiurus intermedius",
-      "common_name": "Northern yellow bat",
+      "species_code": "LAIN",
       "species_code_6": "LASINT"
-    }
+    },
+    "model": "core.Species",
+    "pk": "16"
   },
   {
-    "model": "core.Species",
-    "pk": "48",
     "fields": {
-      "species_code": "LAMI",
+      "common_name": "Minor red bat",
       "family": "Vespertilionidae",
       "genus": "Lasiurus",
       "species": "Lasiurus minor",
-      "common_name": "Minor red bat",
+      "species_code": "LAMI",
       "species_code_6": "LASMIN"
-    }
+    },
+    "model": "core.Species",
+    "pk": "48"
   },
   {
-    "model": "core.Species",
-    "pk": "11",
     "fields": {
-      "species_code": "LANO",
+      "common_name": "Silver-haired bat",
       "family": "Vespertilionidae",
       "genus": "Lasionycteris",
       "species": "Lasionycteris noctivagans",
-      "common_name": "Silver-haired bat",
+      "species_code": "LANO",
       "species_code_6": "LASNOC"
-    }
+    },
+    "model": "core.Species",
+    "pk": "11"
   },
   {
-    "model": "core.Species",
-    "pk": "61",
     "fields": {
-      "species_code": "LANOTABR",
+      "common_name": "Silver-haired bat/Mexican free-tailed bat",
       "family": "",
       "genus": "",
       "species": "Lasiurus noctivagans/Tadarida brasiliensis",
-      "common_name": "Silver-haired bat/Mexican free-tailed bat",
+      "species_code": "LANOTABR",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "61"
   },
   {
-    "model": "core.Species",
-    "pk": "17",
     "fields": {
-      "species_code": "LASE",
+      "common_name": "Seminole bat",
       "family": "Vespertilionidae",
       "genus": "Lasiurus",
       "species": "Lasiurus seminolus",
-      "common_name": "Seminole bat",
+      "species_code": "LASE",
       "species_code_6": "LASSEM"
-    }
+    },
+    "model": "core.Species",
+    "pk": "17"
   },
   {
-    "model": "core.Species",
-    "pk": "18",
     "fields": {
-      "species_code": "LAXA",
+      "common_name": "Western yellow bat",
       "family": "Vespertilionidae",
       "genus": "Lasiurus",
       "species": "Lasiurus xanthinus",
-      "common_name": "Western yellow bat",
+      "species_code": "LAXA",
       "species_code_6": "LASXAN"
-    }
+    },
+    "model": "core.Species",
+    "pk": "18"
   },
   {
-    "model": "core.Species",
-    "pk": "19",
     "fields": {
-      "species_code": "LENI",
+      "common_name": "Greater long-nosed bat",
       "family": "Phyllostomidae",
       "genus": "Leptonycteris",
       "species": "Leptonycteris nivalis",
-      "common_name": "Greater long-nosed bat",
+      "species_code": "LENI",
       "species_code_6": "LEPNIV"
-    }
+    },
+    "model": "core.Species",
+    "pk": "19"
   },
   {
-    "model": "core.Species",
-    "pk": "74",
     "fields": {
-      "species_code": "LESP",
+      "common_name": "Unidentifiable species of the Leptonycteris genus",
       "family": "",
       "genus": "Leptonycteris",
       "species": "",
-      "common_name": "Unidentifiable species of the Leptonycteris genus",
+      "species_code": "LESP",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "74"
   },
   {
-    "model": "core.Species",
-    "pk": "20",
     "fields": {
-      "species_code": "LEYE",
+      "common_name": "Lesser long-nosed bat",
       "family": "Phyllostomidae",
       "genus": "Leptonycteris",
       "species": "Leptonycteris yerbabuenae",
-      "common_name": "Lesser long-nosed bat",
+      "species_code": "LEYE",
       "species_code_6": "LEPYER"
-    }
+    },
+    "model": "core.Species",
+    "pk": "20"
   },
   {
-    "model": "core.Species",
-    "pk": "70",
     "fields": {
-      "species_code": "LowF",
+      "common_name": "Various species with pulses having a minimum frequency lower than 30 kHz.",
       "family": "",
       "genus": "",
       "species": "",
-      "common_name": "Various species with pulses having a minimum frequency lower than 30 kHz.",
+      "species_code": "LowF",
       "species_code_6": "LoF"
-    }
+    },
+    "model": "core.Species",
+    "pk": "70"
   },
   {
-    "model": "core.Species",
-    "pk": "75",
     "fields": {
-      "species_code": "LUSO",
+      "common_name": "Little brown bat/Indiana bat",
       "family": "",
       "genus": "Myotis",
       "species": "Myotis lucifugus/Myotis sodalis",
-      "common_name": "Little brown bat/Indiana bat",
+      "species_code": "LUSO",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "75"
   },
   {
-    "model": "core.Species",
-    "pk": "21",
     "fields": {
-      "species_code": "MACA",
+      "common_name": "California leaf-nosed bat",
       "family": "Phyllostomidae",
       "genus": "Macrotus",
       "species": "Macrotus californicus",
-      "common_name": "California leaf-nosed bat",
+      "species_code": "MACA",
       "species_code_6": "MACCAL"
-    }
+    },
+    "model": "core.Species",
+    "pk": "21"
   },
   {
-    "model": "core.Species",
-    "pk": "23",
     "fields": {
-      "species_code": "MOME",
+      "common_name": "Ghost-faced bat",
       "family": "Mormoopidae",
       "genus": "Mormoops",
       "species": "Mormoops megalophylla",
-      "common_name": "Ghost-faced bat",
+      "species_code": "MOME",
       "species_code_6": "MORMEG"
-    }
+    },
+    "model": "core.Species",
+    "pk": "23"
   },
   {
-    "model": "core.Species",
-    "pk": "22",
     "fields": {
-      "species_code": "MOMO",
+      "common_name": "Pallas's mastiff bat",
       "family": "Molossidae",
       "genus": "Molossus",
       "species": "Molossus molossus",
-      "common_name": "Pallas's mastiff bat",
+      "species_code": "MOMO",
       "species_code_6": "MOLMOL"
-    }
+    },
+    "model": "core.Species",
+    "pk": "22"
   },
   {
-    "model": "core.Species",
-    "pk": "29",
     "fields": {
-      "species_code": "MYGR",
+      "common_name": "Gray bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis grisescens",
-      "common_name": "Gray bat",
+      "species_code": "MYGR",
       "species_code_6": "MYOGRI"
-    }
+    },
+    "model": "core.Species",
+    "pk": "29"
   },
   {
-    "model": "core.Species",
-    "pk": "32",
     "fields": {
-      "species_code": "MYLU",
+      "common_name": "Little brown bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis lucifugus",
-      "common_name": "Little brown bat",
+      "species_code": "MYLU",
       "species_code_6": "MYOLUC"
-    }
+    },
+    "model": "core.Species",
+    "pk": "32"
   },
   {
-    "model": "core.Species",
-    "pk": "84",
     "fields": {
-      "species_code": "MYLUMYSE",
+      "common_name": "Little brown bat/Northern long-eared bat",
       "family": "",
       "genus": "",
       "species": "Myotis lucifugus/Myotis septentrionalis",
-      "common_name": "Little brown bat/Northern long-eared bat",
+      "species_code": "MYLUMYSE",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "84"
   },
   {
-    "model": "core.Species",
-    "pk": "33",
     "fields": {
-      "species_code": "MYSE",
+      "common_name": "Northern long-eared bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis septentrionalis",
-      "common_name": "Northern long-eared bat",
+      "species_code": "MYSE",
       "species_code_6": "MYOSEP"
-    }
+    },
+    "model": "core.Species",
+    "pk": "33"
   },
   {
-    "model": "core.Species",
-    "pk": "34",
     "fields": {
-      "species_code": "MYSO",
+      "common_name": "Indiana bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis sodalis",
-      "common_name": "Indiana bat",
+      "species_code": "MYSO",
       "species_code_6": "MYOSOD"
-    }
+    },
+    "model": "core.Species",
+    "pk": "34"
   },
   {
-    "model": "core.Species",
-    "pk": "24",
     "fields": {
-      "species_code": "MYAR",
+      "common_name": "Southwestern bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis auriculus",
-      "common_name": "Southwestern bat",
+      "species_code": "MYAR",
       "species_code_6": "MYOAUR"
-    }
+    },
+    "model": "core.Species",
+    "pk": "24"
   },
   {
-    "model": "core.Species",
-    "pk": "69",
     "fields": {
-      "species_code": "MYSP",
+      "common_name": "General Myotis Spcies Code",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "",
-      "common_name": "General Myotis Spcies Code",
+      "species_code": "MYSP",
       "species_code_6": "40kMyo"
-    }
+    },
+    "model": "core.Species",
+    "pk": "69"
   },
   {
-    "model": "core.Species",
-    "pk": "25",
     "fields": {
-      "species_code": "MYAU",
+      "common_name": "Southeastern bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis austroriparius",
-      "common_name": "Southeastern bat",
+      "species_code": "MYAU",
       "species_code_6": "MYOAUS"
-    }
+    },
+    "model": "core.Species",
+    "pk": "25"
   },
   {
-    "model": "core.Species",
-    "pk": "26",
     "fields": {
-      "species_code": "MYCA",
+      "common_name": "California bat ",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis californicus",
-      "common_name": "California bat ",
+      "species_code": "MYCA",
       "species_code_6": "MYOCAL"
-    }
+    },
+    "model": "core.Species",
+    "pk": "26"
   },
   {
-    "model": "core.Species",
-    "pk": "4",
     "fields": {
-      "species_code": "COTO",
+      "common_name": "Townsend's big-eared bat",
       "family": "Vespertilionidae",
       "genus": "Corynorhinus",
       "species": "Corynorhinus townsendii",
-      "common_name": "Townsend's big-eared bat",
+      "species_code": "COTO",
       "species_code_6": "CORTOW"
-    }
+    },
+    "model": "core.Species",
+    "pk": "4"
   },
   {
-    "model": "core.Species",
-    "pk": "86",
     "fields": {
-      "species_code": "COTV",
+      "common_name": "Virginia big-eared bat",
       "family": "Vespertilionidae",
       "genus": "Corynorhinus",
       "species": "Corynorhinus townsendii virginianus",
-      "common_name": "Virginia big-eared bat",
+      "species_code": "COTV",
       "species_code_6": "COTOVI"
-    }
+    },
+    "model": "core.Species",
+    "pk": "86"
   },
   {
-    "model": "core.Species",
-    "pk": "66",
     "fields": {
-      "species_code": "NoID",
+      "common_name": "Bat but no grouping or user-defined category applies",
       "family": "",
       "genus": "",
       "species": "",
-      "common_name": "Bat but no grouping or user-defined category applies",
+      "species_code": "NoID",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "66"
   },
   {
-    "model": "core.Species",
-    "pk": "53",
     "fields": {
-      "species_code": "NOLE",
+      "common_name": "Greater bulldog bat",
       "family": "Noctilionidae",
       "genus": "Noctilio",
       "species": "Noctilio leporinus",
-      "common_name": "Greater bulldog bat",
+      "species_code": "NOLE",
       "species_code_6": "NOCLEP"
-    }
+    },
+    "model": "core.Species",
+    "pk": "53"
   },
   {
-    "model": "core.Species",
-    "pk": "40",
     "fields": {
-      "species_code": "NYFE",
+      "common_name": "Pocketed free-tailed bat",
       "family": "Molossidae",
       "genus": "Nyctinomops",
       "species": "Nyctinomops femorosaccus",
-      "common_name": "Pocketed free-tailed bat",
+      "species_code": "NYFE",
       "species_code_6": "NYCFEM"
-    }
+    },
+    "model": "core.Species",
+    "pk": "40"
   },
   {
-    "model": "core.Species",
-    "pk": "39",
     "fields": {
-      "species_code": "NYHU",
+      "common_name": "Evening bat",
       "family": "Vespertilionidae",
       "genus": "Nycticeius",
       "species": "Nycticeius humeralis",
-      "common_name": "Evening bat",
+      "species_code": "NYHU",
       "species_code_6": "NYCHUM"
-    }
+    },
+    "model": "core.Species",
+    "pk": "39"
   },
   {
-    "model": "core.Species",
-    "pk": "41",
     "fields": {
-      "species_code": "NYMA",
+      "common_name": "Big free-tailed bat",
       "family": "Molossidae",
       "genus": "Nyctinomops",
       "species": "Nyctinomops macrotis",
-      "common_name": "Big free-tailed bat",
+      "species_code": "NYMA",
       "species_code_6": "NYCMAC"
-    }
+    },
+    "model": "core.Species",
+    "pk": "41"
   },
   {
-    "model": "core.Species",
-    "pk": "42",
     "fields": {
-      "species_code": "PAHE",
+      "common_name": "Canyon bat",
       "family": "Vespertilionidae",
       "genus": "Parastrellus",
       "species": "Parastrellus hesperus",
-      "common_name": "Canyon bat",
+      "species_code": "PAHE",
       "species_code_6": "PARHES"
-    }
+    },
+    "model": "core.Species",
+    "pk": "42"
   },
   {
-    "model": "core.Species",
-    "pk": "43",
     "fields": {
-      "species_code": "PESU",
+      "common_name": "Tricolored bat",
       "family": "Vespertilionidae",
       "genus": "Perimyotis",
       "species": "Perimyotis subflavus",
-      "common_name": "Tricolored bat",
+      "species_code": "PESU",
       "species_code_6": "PERSUB"
-    }
+    },
+    "model": "core.Species",
+    "pk": "43"
   },
   {
-    "model": "core.Species",
-    "pk": "54",
     "fields": {
-      "species_code": "STRU",
+      "common_name": "Red fruit bat",
       "family": "Phyllostomidae",
       "genus": "Stenoderma",
       "species": "Stenoderma rufum",
-      "common_name": "Red fruit bat",
+      "species_code": "STRU",
       "species_code_6": "STERUF"
-    }
+    },
+    "model": "core.Species",
+    "pk": "54"
   },
   {
-    "model": "core.Species",
-    "pk": "44",
     "fields": {
-      "species_code": "TABR",
+      "common_name": "Brazilian free-tailed bat",
       "family": "Molossidae",
       "genus": "Tadarida",
       "species": "Tadarida brasiliensis",
-      "common_name": "Brazilian free-tailed bat",
+      "species_code": "TABR",
       "species_code_6": "TADBRA"
-    }
+    },
+    "model": "core.Species",
+    "pk": "44"
   },
   {
-    "model": "core.Species",
-    "pk": "63",
     "fields": {
-      "species_code": "LEMY",
+      "common_name": "Western long-eared myotis/Keen's myotis/Northern long-eared bat",
       "family": "",
       "genus": "",
       "species": "Myotis evotis/Myotis septentrionalis",
-      "common_name": "Western long-eared myotis/Keen's myotis/Northern long-eared bat",
+      "species_code": "LEMY",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "63"
   },
   {
-    "model": "core.Species",
-    "pk": "89",
     "fields": {
-      "species_code": "NoBat",
+      "common_name": "Code used for surveys that recorded 0 bats",
       "family": "",
       "genus": "",
       "species": "",
-      "common_name": "Code used for surveys that recorded 0 bats",
+      "species_code": "NoBat",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "89"
   },
   {
-    "model": "core.Species",
-    "pk": "78",
     "fields": {
-      "species_code": "MYCAMYCI",
+      "common_name": "California bat/Western small-footed bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis californicus/Myotis ciliolabrum",
-      "common_name": "California bat/Western small-footed bat",
+      "species_code": "MYCAMYCI",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "78"
   },
   {
-    "model": "core.Species",
-    "pk": "64",
     "fields": {
-      "species_code": "MYCAMYYU",
+      "common_name": "California bat/Yuma bat",
       "family": "",
       "genus": "",
       "species": "Myotis californicus/Myotis yumanensis",
-      "common_name": "California bat/Yuma bat",
+      "species_code": "MYCAMYYU",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "64"
   },
   {
-    "model": "core.Species",
-    "pk": "27",
     "fields": {
-      "species_code": "MYCI",
+      "common_name": "Western small-footed bat ",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis ciliolabrum",
-      "common_name": "Western small-footed bat ",
+      "species_code": "MYCI",
       "species_code_6": "MYOCIL"
-    }
+    },
+    "model": "core.Species",
+    "pk": "27"
   },
   {
-    "model": "core.Species",
-    "pk": "73",
     "fields": {
-      "species_code": "MYCIMYVO",
+      "common_name": "Western small-footed bat/Long-legged bat",
       "family": "",
       "genus": "",
       "species": "Myotis ciliolabrum/Myotis volans",
-      "common_name": "Western small-footed bat/Long-legged bat",
+      "species_code": "MYCIMYVO",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "73"
   },
   {
-    "model": "core.Species",
-    "pk": "28",
     "fields": {
-      "species_code": "MYEV",
+      "common_name": "Western long-eared bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis evotis",
-      "common_name": "Western long-eared bat",
+      "species_code": "MYEV",
       "species_code_6": "MYOEVO"
-    }
+    },
+    "model": "core.Species",
+    "pk": "28"
   },
   {
-    "model": "core.Species",
-    "pk": "80",
     "fields": {
-      "species_code": "MYEVMYTH",
+      "common_name": "Western long-eared bat/Fringed bat",
       "family": "",
       "genus": "Myotis",
       "species": "Myotis evotis/Myotis thysanodes",
-      "common_name": "Western long-eared bat/Fringed bat",
+      "species_code": "MYEVMYTH",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "80"
   },
   {
-    "model": "core.Species",
-    "pk": "31",
     "fields": {
-      "species_code": "MYLE",
+      "common_name": "Eastern small-footed bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis leibii",
-      "common_name": "Eastern small-footed bat",
+      "species_code": "MYLE",
       "species_code_6": "MYOLEI"
-    }
+    },
+    "model": "core.Species",
+    "pk": "31"
   },
   {
-    "model": "core.Species",
-    "pk": "81",
     "fields": {
-      "species_code": "MYLUMYCI",
+      "common_name": "Little brown bat/Western small-footed bat",
       "family": "",
       "genus": "Myotis",
       "species": "Myotis lucifugus/Myotis ciliolabrum",
-      "common_name": "Little brown bat/Western small-footed bat",
+      "species_code": "MYLUMYCI",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "81"
   },
   {
-    "model": "core.Species",
-    "pk": "79",
     "fields": {
-      "species_code": "MYLUMYVO",
+      "common_name": "Little brown bat/Long-legged bat",
       "family": "",
       "genus": "Myotis",
       "species": "Myotis lucifugus/Myotis volans",
-      "common_name": "Little brown bat/Long-legged bat",
+      "species_code": "MYLUMYVO",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "79"
   },
   {
-    "model": "core.Species",
-    "pk": "52",
     "fields": {
-      "species_code": "MYOC",
+      "common_name": "Arizona bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis occultus",
-      "common_name": "Arizona bat",
+      "species_code": "MYOC",
       "species_code_6": "MYOOCC"
-    }
+    },
+    "model": "core.Species",
+    "pk": "52"
   },
   {
-    "model": "core.Species",
-    "pk": "35",
     "fields": {
-      "species_code": "MYTH",
+      "common_name": "Fringed bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis thysanodes",
-      "common_name": "Fringed bat",
+      "species_code": "MYTH",
       "species_code_6": "MYOTHY"
-    }
+    },
+    "model": "core.Species",
+    "pk": "35"
   },
   {
-    "model": "core.Species",
-    "pk": "36",
     "fields": {
-      "species_code": "MYVE",
+      "common_name": "Cave bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis velifer",
-      "common_name": "Cave bat",
+      "species_code": "MYVE",
       "species_code_6": "MYOVEL"
-    }
+    },
+    "model": "core.Species",
+    "pk": "36"
   },
   {
-    "model": "core.Species",
-    "pk": "37",
     "fields": {
-      "species_code": "MYVO",
+      "common_name": "Long-legged bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis volans",
-      "common_name": "Long-legged bat",
+      "species_code": "MYVO",
       "species_code_6": "MYOVOL"
-    }
+    },
+    "model": "core.Species",
+    "pk": "37"
   },
   {
-    "model": "core.Species",
-    "pk": "38",
     "fields": {
-      "species_code": "MYYU",
+      "common_name": "Yuma bat ",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis yumanensis",
-      "common_name": "Yuma bat ",
+      "species_code": "MYYU",
       "species_code_6": "MYOYUM"
-    }
+    },
+    "model": "core.Species",
+    "pk": "38"
   },
   {
-    "model": "core.Species",
-    "pk": "88",
     "fields": {
-      "species_code": "MYYUMYLU",
+      "common_name": "Yuma bat/Little brown bat",
       "family": "Vespertilionidae",
       "genus": "Myotis",
       "species": "Myotis yumanensis/Myotis lucifugus",
-      "common_name": "Yuma bat/Little brown bat",
+      "species_code": "MYYUMYLU",
       "species_code_6": ""
-    }
+    },
+    "model": "core.Species",
+    "pk": "88"
   },
   {
-    "model": "core.Species",
-    "pk": "90",
     "fields": {
-      "species_code": "COTI",
+      "common_name": "Ozark big-eared bat",
       "family": "Vespertilionidae",
       "genus": "Corynorhinus",
       "species": "Corynorhinus townsendii ingens",
-      "common_name": "Ozark big-eared bat",
+      "species_code": "COTI",
       "species_code_6": "COTOIN"
-    }
+    },
+    "model": "core.Species",
+    "pk": "90"
   },
   {
-    "model": "core.Species",
-    "pk": "77",
     "fields": {
-      "species_code": "NYSP",
+      "common_name": "Unidentifiable species of the Nyctinomops genus",
       "family": "Molossidae",
       "genus": "Nyctinomops",
       "species": "",
-      "common_name": "Unidentifiable species of the Nyctinomops genus",
+      "species_code": "NYSP",
       "species_code_6": "NYCSPP"
-    }
+    },
+    "model": "core.Species",
+    "pk": "77"
   }
 ]

@@ -1,0 +1,172 @@
+version: '3.8'
+
+services:
+  # COMMENTED OUT UNTIL READY TO TEST
+  traefik:
+    restart: always
+    image: traefik:v2.4
+    container_name: traefik
+    env_file: ./dev/.env.prod.docker-compose
+    networks:
+      - django-nginx
+    command: >
+      --providers.docker=true
+      --providers.docker.exposedByDefault=false
+      --log.level=${LOG_LEVEL:-WARN}
+      --providers.docker.exposedByDefault=false
+      --providers.file.filename=/var/traefik/dynamic.yml
+      --entrypoints.web.address=:80
+      --entrypoints.websecure.address=:443
+      --entrypoints.websecure.http.tls.certresolver=myresolver
+      --certificatesresolvers.myresolver.acme.email=${ACME_EMAIL:-Bryon.Lewis@kitware.com}
+      --certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json
+      --certificatesresolvers.myresolver.acme.httpchallenge=true
+      --certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web
+      --certificatesresolvers.myresolver.acme.caserver=${ACME_CA_SERVER:-https://acme-v02.api.letsencrypt.org/directory}
+    labels:
+      # Traefik HTTPS Redirect
+      - "traefik.enable=true"
+      - "traefik.http.routers.http-catchall.entrypoints=web"
+      - "traefik.http.routers.http-catchall.rule=Host(`${SERVERHOSTNAME:-batdetectai.kitware.com}`)"
+      - "traefik.http.routers.http-catchall.middlewares=redirect-to-https-mddl@docker"
+      - "traefik.http.middlewares.redirect-to-https-mddl.redirectscheme.scheme=https"
+    volumes:
+      - "${SOCK_PATH:-/var/run/docker.sock}:/var/run/docker.sock"
+      - "./traefik/letsencrypt:/letsencrypt"
+      - "./traefik/dynamic.yml:/var/traefik/dynamic.yml:ro"
+    ports:
+      - "80:80"
+      - "443:443"
+
+  django:
+    build:
+      context: .
+      dockerfile: ./dev/django.Dockerfile
+    command: 'gunicorn bats_ai.wsgi:application --bind 0.0.0.0:8000'
+    # ./manage.py runserver 0.0.0.0:8000 --noreload
+    # entrypoint: ["/bin/bash"]
+    # command: ""
+    # Log printing via Rich is enhanced by a TTY
+    tty: true
+    env_file: ./dev/.env.prod.docker-compose
+    networks:
+      - django-nginx
+    volumes:
+      - .:/opt/django-project
+    environment:
+      - SERVERHOSTNAME=${SERVERHOSTNAME:-batdetectai.kitware.com}
+    ports:
+      - 8000:8000
+    depends_on:
+      - postgres
+      - rabbitmq
+      - minio
+  celery:
+    build:
+      context: .
+      dockerfile: ./dev/django.Dockerfile
+    command: [
+      "celery",
+      "--app", "bats_ai.celery",
+      "worker",
+      "--loglevel", "INFO",
+      "--without-heartbeat"
+    ]
+    # Docker Compose does not set the TTY width, which causes Celery errors
+    tty: false
+    env_file: ./dev/.env.prod.docker-compose
+    networks:
+      - django-nginx
+    volumes:
+      - .:/opt/django-project
+    depends_on:
+      - postgres
+      - rabbitmq
+      - minio
+  client:
+    build:
+      context: .
+      dockerfile: ./dev/client.Dockerfile
+    env_file: ./dev/.env.prod.docker-compose
+    networks:
+      - django-nginx
+    depends_on:
+      - django
+    labels:
+      - "traefik.http.routers.client-rtr.entrypoints=websecure"
+      - "traefik.http.routers.client-rtr.rule=Host(`${SERVERHOSTNAME:-batdetectai.kitware.com}`)"
+      - "traefik.enable=true"
+      - "traefik.http.services.client-svc.loadbalancer.server.port=80"
+  postgres:
+    image: postgis/postgis:latest
+    env_file: ./dev/.env.prod.docker-compose
+    environment:
+      - POSTGRES_DB=${DJANGO_DATABASE_NAME:-django}
+      - POSTGRES_PASSWORD=${DJANGO_MINIO_STORAGE_SECRET_KEY:-postgres}
+    networks:
+      - django-nginx
+    ports:
+      - ${DOCKER_POSTGRES_PORT-5432}:5432
+    volumes:
+      - postgres:/var/lib/postgresql/data
+
+  rabbitmq:
+    env_file: ./dev/.env.prod.docker-compose
+    image: rabbitmq:management
+    networks:
+      - django-nginx
+    ports:
+      - ${DOCKER_RABBITMQ_PORT-5672}:5672
+      - ${DOCKER_RABBITMQ_CONSOLE_PORT-15672}:15672
+    volumes:
+      - rabbitmq:/var/lib/rabbitmq/mnesia
+
+  minio:
+    image: minio/minio:latest
+    # When run with a TTY, minio prints credentials on startup
+    tty: true
+    command: ["server", "/data", "--console-address", ":${DOCKER_MINIO_CONSOLE_PORT-9001}"]
+    env_file: ./dev/.env.prod.docker-compose
+    environment:
+      - MINIO_ROOT_USER=${DJANGO_MINIO_STORAGE_ACCESS_KEY:-minioAccessKey}
+      - MINIO_ROOT_PASSWORD=${DJANGO_DATABASE_PASSWORD:-minioSecretKey}
+    networks:
+      - django-nginx
+    ports:
+      - ${DOCKER_MINIO_PORT-9000}:9000
+      - ${DOCKER_MINIO_CONSOLE_PORT-9001}:9001
+    volumes:
+      - minio:/data
+
+  flower:
+    env_file: ./dev/.env.prod.docker-compose
+    build:
+      context: .
+      dockerfile: ./dev/django.Dockerfile
+    command: [
+      "celery",
+      "--app", "bats_ai.celery",
+      "flower"
+    ]
+    tty: false
+    volumes:
+      - .:/opt/django-project
+    networks:
+      - django-nginx
+    ports:
+      - ${DOCKER_FLOWER_PORT-5555}:5555
+    depends_on:
+      - postgres
+      - rabbitmq
+      - minio
+      - celery
+
+volumes:
+  postgres:
+  sourcedb:
+  minio:
+  rabbitmq:
+
+networks:
+  django-nginx:
+    driver: bridge

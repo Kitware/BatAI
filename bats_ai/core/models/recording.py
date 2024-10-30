@@ -1,6 +1,33 @@
+import logging
+
 from django.contrib.auth.models import User
 from django.contrib.gis.db import models
+from django.dispatch import receiver
 from django_extensions.db.models import TimeStampedModel
+
+from .species import Species
+
+logger = logging.getLogger(__name__)
+
+
+COLORMAP = None
+
+
+class colormap:
+    def __init__(self, colormap=None):
+        self.colormap = colormap
+        self.previous = None
+
+    def __enter__(self):
+        global COLORMAP
+
+        self.previous = COLORMAP
+        COLORMAP = self.colormap
+
+    def __exit__(self, exc_type, exc_value, exc_tb):
+        global COLORMAP
+
+        COLORMAP = self.previous
 
 
 # TimeStampedModel also provides "created" and "modified" fields
@@ -9,62 +36,71 @@ class Recording(TimeStampedModel, models.Model):
     audio_file = models.FileField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     recorded_date = models.DateField(blank=True, null=True)
+    recorded_time = models.TimeField(blank=True, null=True)
     equipment = models.TextField(blank=True, null=True)
     comments = models.TextField(blank=True, null=True)
-    recording_location = models.GeometryField(srid=0, blank=True, null=True)
+    recording_location = models.GeometryField(srid=4326, blank=True, null=True)
     grts_cell_id = models.IntegerField(blank=True, null=True)
     grts_cell = models.IntegerField(blank=True, null=True)
+    public = models.BooleanField(default=False)
+    software = models.TextField(blank=True, null=True)
+    detector = models.TextField(blank=True, null=True)
+    species_list = models.TextField(blank=True, null=True)
+    site_name = models.TextField(blank=True, null=True)
+    computed_species = models.ManyToManyField(
+        Species, related_name='recording_computed_species'
+    )  # species from a computed sense
+    official_species = models.ManyToManyField(
+        Species, related_name='recording_official_species'
+    )  # species that are detemrined by the owner or from annotations as official species list
+    unusual_occurrences = models.TextField(blank=True, null=True)
 
-    def generate_spectrogram(self):
-        import base64
-        from io import BytesIO
+    @property
+    def has_spectrogram(self):
+        return len(self.spectrograms) > 0
 
-        import librosa
-        import librosa.display
-        import matplotlib.pyplot as plt
-        import numpy as np
+    @property
+    def spectrograms(self):
+        from bats_ai.core.models import Spectrogram
 
-        # Load audio file
-        bytefile = self.audio_file.read()
+        query = Spectrogram.objects.filter(recording=self, colormap=COLORMAP).order_by('-created')
+        return query.all()
 
-        y, sr = librosa.load(BytesIO(bytefile))
+    @property
+    def spectrogram(self):
+        pass
 
-        # Generate spectrogram
-        D = librosa.amplitude_to_db(np.abs(librosa.stft(y)), ref=np.max)
+        spectrograms = self.spectrograms
 
-        # Plot and save the spectrogram
-        plt.figure(figsize=(10, 4))
-        librosa.display.specshow(D, sr=sr, x_axis='time', y_axis='linear')
-        plt.colorbar(format='%+2.0f dB')
-        plt.title('Spectrogram')
-        plt.xlabel('Time')
-        plt.ylabel('Frequency')
-        plt.tight_layout()
+        assert len(spectrograms) >= 1
+        spectrogram = spectrograms[0]  # most recently created
 
-        # Convert the plot to base64
-        buffer = BytesIO()
-        plt.savefig(buffer, format='png')
-        buffer.seek(0)
-        base64_image = base64.b64encode(buffer.read()).decode('utf-8')
+        return spectrogram
 
-        plt.close()
+    @property
+    def has_compressed_spectrogram(self):
+        return len(self.compressed_spectrograms) > 0
 
-        start_time = 0.0
-        end_time = librosa.get_duration(y=y, sr=sr) * 1000  # in milliseconds
-        low_frequency = 0  # Set your desired low frequency
-        high_frequency = sr / 2  # Set your desired high frequency
-        image_width = 10 * 100  # 10 inches at 100 dpi
-        image_height = 4 * 100  # 4 inches at 100 dpi
+    @property
+    def compressed_spectrograms(self):
+        from bats_ai.core.models import CompressedSpectrogram
 
-        # Return dictionary with all required fields
-        return {
-            'base64_spectrogram': base64_image,
-            'spectroInfo': {
-                'width': image_width,
-                'height': image_height,
-                'start_time': start_time,
-                'end_time': end_time,
-                'low_freq': low_frequency,
-                'high_freq': high_frequency,
-            },
-        }
+        query = CompressedSpectrogram.objects.filter(recording=self).order_by('-created')
+        return query.all()
+
+    @property
+    def compressed_spectrogram(self):
+        pass
+
+        compressed_spectrograms = self.compressed_spectrograms
+
+        assert len(compressed_spectrograms) >= 1
+        spectrogram = compressed_spectrograms[0]  # most recently created
+
+        return spectrogram
+
+
+@receiver(models.signals.pre_delete, sender=Recording)
+def delete_content(sender, instance, **kwargs):
+    if instance.audio_file:
+        instance.audio_file.delete(save=False)

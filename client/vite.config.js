@@ -1,7 +1,7 @@
 import path from 'path';
 import { defineConfig } from 'vite';
 import Vue from '@vitejs/plugin-vue';
-import Vuetify from '@vuetify/vite-plugin';
+import Vuetify from 'vite-plugin-vuetify';
 
 // https://vitejs.dev/config/
 export default defineConfig({

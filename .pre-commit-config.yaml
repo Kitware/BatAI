@@ -1,21 +1,60 @@
-files: ^(bats_ai)/
+exclude: |
+  (?x)(
+      ^.github/ |
+      ^terraform/ |
+      ^staticfiles/ |
+      ^client/
+  )
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v4.5.0
     hooks:
       - id: check-case-conflict
       - id: check-docstring-first
+      - id: check-executables-have-shebangs
       - id: check-json
       - id: check-merge-conflict
+      - id: check-shebang-scripts-are-executable
       - id: check-toml
       - id: check-yaml
+        args: ['--unsafe']
       - id: debug-statements
       - id: destroyed-symlinks
       - id: detect-private-key
       - id: double-quote-string-fixer
       - id: end-of-file-fixer
       - id: mixed-line-ending
+        args: ['--fix=lf']
+      - id: pretty-format-json
+        name: Format JSON files
+        args: ["--autofix"]
       - id: trailing-whitespace
+
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.1-beta
+    hooks:
+      - id: hadolint-docker
+        name: Hadolint for Dockerfiles
+
+  - repo: https://github.com/lovesegfault/beautysh
+    rev: v6.2.1
+    hooks:
+      - id: beautysh
+        name: Beautysh for Bash scripts
+        args: ["--indent-size", "4"]
+
+  - repo: https://github.com/igorshubovych/markdownlint-cli
+    rev: v0.38.0
+    hooks:
+      - id: markdownlint-fix-docker
+        name: MarkdownLint for Markdown files
+        args: ["--fix"]
+
+  - repo: https://github.com/sirwart/ripsecrets
+    rev: v0.1.7
+    hooks:
+      - id: ripsecrets
+        name: RIPSecrets for API keys and secrets
 
   - repo: https://github.com/psf/black
     rev: 23.9.1
