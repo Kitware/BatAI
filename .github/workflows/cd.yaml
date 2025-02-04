@@ -1,0 +1,50 @@
+name: CD
+on:
+  push:
+    branches:
+      - "main"
+  release:
+    types:
+      - published
+concurrency:
+  # Only run the latest workflow.
+  # If a build is already happening, cancel it to avoid a race
+  # condition where an older image overwrites a newer one.
+  group: ${{ github.workflow }}
+  cancel-in-progress: true
+jobs:
+  build:
+    name: Build [batai]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate image tags
+        uses: actions/github-script@v6
+        id: image-tags
+        with:
+          result-encoding: string
+          script: |
+            const image = 'ghcr.io/${{ github.repository }}'.toLowerCase();
+            let tags = `${image}/batai:latest`;
+            if ('${{ github.ref }}'.startsWith('refs/tags/v')) {
+              tags += `,${image}/batai:${{ github.ref_name }}`;
+            }
+            return tags;
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          context: .
+          platforms: linux/amd64
+          push: true
+          tags: ${{ steps.image-tags.outputs.result }}
